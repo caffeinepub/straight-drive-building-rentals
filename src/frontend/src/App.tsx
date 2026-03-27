@@ -10,12 +10,13 @@ import {
   Calendar,
   CheckCircle2,
   ChevronDown,
-  ExternalLink,
   Layers,
   Mail,
   MapPin,
   Menu,
+  MessageCircle,
   Phone,
+  Share2,
   ShieldCheck,
   Sparkles,
   Star,
@@ -102,24 +103,64 @@ const specs = [
 
 const galleryImages = [
   {
-    src: "/assets/IMG-20260323-WA0003.jpg",
-    alt: "Building view",
+    src: "/assets/uploads/img-20260323-wa0023-019d28cf-d05a-70fa-a0cf-2bea09ecb418-15.jpg",
+    alt: "Spacious bedroom with natural light",
   },
   {
-    src: "/assets/IMG-20260323-WA0006.jpg",
-    alt: "Building exterior",
+    src: "/assets/uploads/img-20260323-wa0025-019d28cf-cf47-73ba-80b2-c4790377a6a0-10.jpg",
+    alt: "Master bedroom with city view",
   },
   {
-    src: "/assets/IMG-20260323-WA0007.jpg",
-    alt: "Building interior",
+    src: "/assets/uploads/img-20260323-wa0026-019d28cf-cf3f-7463-97a6-b27495dbdd61-9.jpg",
+    alt: "Balcony / ventilation area",
   },
   {
-    src: "/assets/IMG-20260323-WA0008.jpg",
-    alt: "Apartment view",
+    src: "/assets/uploads/img-20260323-wa0028-019d28cf-cf0c-72bb-bbd4-83f95bb098b2-8.jpg",
+    alt: "Living room",
   },
   {
-    src: "/assets/IMG-20260323-WA0009.jpg",
-    alt: "Room view",
+    src: "/assets/uploads/img-20260323-wa0029-019d28cf-cf31-74c8-9fcb-65da99e1736b-11.jpg",
+    alt: "Bedroom with window",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0030-019d28cf-cf9b-720b-9c46-d4a7fc566fd9-13.jpg",
+    alt: "Kitchen with modular cabinets",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0031-019d28cf-cfa9-7465-82a2-58fbedf48c77-14.jpg",
+    alt: "Modern kitchen",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0032-019d28cf-cde7-716f-a6a7-7aa13148360c-2.jpg",
+    alt: "Kitchen interior",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0033-019d28cf-cefe-7599-8240-c314fd8b0ffc-7.jpg",
+    alt: "Bedroom view",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0034-019d28cf-ce1f-7607-badf-7cc6c3bb09b1-4.jpg",
+    alt: "Hallway / corridor",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0035-019d28cf-cdb1-749f-aed4-40a73e11d24a-1.jpg",
+    alt: "Bedroom with door",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0036-019d28cf-ce0e-737b-bda4-e6b24845625f-3.jpg",
+    alt: "Spacious room",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0037-019d28cf-ce3a-7658-8b32-008a219b2057-5.jpg",
+    alt: "Living room with sunlight",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0027-019d28cf-cec5-72b9-bf02-04207669a3f4-6.jpg",
+    alt: "Entrance area",
+  },
+  {
+    src: "/assets/uploads/img-20260323-wa0024-019d28cf-cf70-7155-aa3b-8904dfa15387-12.jpg",
+    alt: "Premium bathroom with marble tiles",
   },
 ];
 
@@ -133,6 +174,7 @@ export default function App() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
   const inquiryRef = useRef<HTMLElement>(null);
 
   const scrollToInquiry = () => {
@@ -143,6 +185,25 @@ export default function App() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: "2BHK Apartments for Rent — Telecom Layout, Thanisandra",
+      text: "Check out this brand new 2BHK apartment for rent at Telecom Layout, Thanisandra, Bangalore. Available from April 15, 2026.",
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (_) {
+        // user cancelled
+      }
+    } else {
+      await navigator.clipboard.writeText(window.location.href);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    }
   };
 
   const navLinks = [
@@ -239,7 +300,7 @@ export default function App() {
       <section
         className="relative min-h-[580px] md:min-h-[680px] flex items-center overflow-hidden"
         style={{
-          backgroundImage: `url('/assets/IMG-20260323-WA0003.jpg')`,
+          backgroundImage: `url('/assets/uploads/img-20260323-wa0023-019d28cf-d05a-70fa-a0cf-2bea09ecb418-15.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -544,8 +605,8 @@ export default function App() {
             >
               <div className="bg-white rounded-2xl shadow-card overflow-hidden">
                 <img
-                  src="/assets/IMG-20260323-WA0009.jpg"
-                  alt="Building view"
+                  src="/assets/uploads/img-20260323-wa0030-019d28cf-cf9b-720b-9c46-d4a7fc566fd9-13.jpg"
+                  alt="Kitchen with modular cabinets"
                   className="w-full h-56 object-cover"
                   loading="lazy"
                 />
@@ -689,6 +750,38 @@ export default function App() {
                 className="bg-white rounded-2xl shadow-card p-8"
                 data-ocid="contact.info.card"
               >
+                {/* Trust Badges */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
+                    Owner Listed
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 inline-block" />
+                    Zero Brokerage
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block" />
+                    New Construction
+                  </span>
+                </div>
+
+                {/* Availability Status */}
+                <div className="flex items-center gap-2 mb-5 p-3 bg-green-50 rounded-lg border border-green-100">
+                  <span className="relative flex h-2.5 w-2.5 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold text-green-800">
+                      Available from {PROPERTY.availableFrom}
+                    </p>
+                    <p className="text-xs text-green-600">
+                      Limited Units Available
+                    </p>
+                  </div>
+                </div>
+
                 <h3 className="font-display font-bold text-xl text-navy mb-6">
                   Contact Us
                 </h3>
@@ -758,7 +851,13 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-border">
+                {/* Property ID */}
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Property ID: <span className="font-mono">RES-2026-TLY</span>
+                </p>
+
+                <div className="mt-6 pt-6 border-t border-border space-y-3">
+                  {/* Send Inquiry button */}
                   <Button
                     onClick={scrollToInquiry}
                     className="w-full bg-navy hover:bg-navy/90 text-white font-semibold"
@@ -767,6 +866,61 @@ export default function App() {
                     <Mail className="mr-2 w-4 h-4" />
                     Send an Inquiry
                   </Button>
+
+                  {/* Schedule a Site Visit */}
+                  <Button
+                    onClick={scrollToInquiry}
+                    variant="outline"
+                    className="w-full border-navy text-navy hover:bg-navy/5 font-semibold"
+                    data-ocid="contact.site_visit.button"
+                  >
+                    <Calendar className="mr-2 w-4 h-4" />
+                    Schedule a Site Visit
+                  </Button>
+
+                  {/* WhatsApp button */}
+                  <a
+                    href={`https://wa.me/91${PROPERTY.phone}?text=${encodeURIComponent("Hi, I'm interested in the 2BHK apartment at Telecom Layout, Thanisandra. Please share more details.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full"
+                    data-ocid="contact.whatsapp.link"
+                  >
+                    <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold">
+                      <MessageCircle className="mr-2 w-4 h-4" />
+                      Chat on WhatsApp
+                    </Button>
+                  </a>
+
+                  {/* Share Property button */}
+                  <Button
+                    onClick={handleShare}
+                    variant="outline"
+                    className="w-full border-border text-muted-foreground hover:text-foreground font-semibold"
+                    data-ocid="contact.share.button"
+                  >
+                    <Share2 className="mr-2 w-4 h-4" />
+                    {shareCopied ? "Link Copied!" : "Share Property"}
+                  </Button>
+                </div>
+
+                {/* Also listed on */}
+                <div className="mt-5 pt-5 border-t border-border">
+                  <p className="text-xs text-muted-foreground mb-2 font-medium">
+                    Also listed on:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["99acres", "MagicBricks", "NoBroker", "Housing.com"].map(
+                      (portal) => (
+                        <span
+                          key={portal}
+                          className="text-xs font-semibold px-2.5 py-1 rounded border border-border bg-gray-50 text-muted-foreground"
+                        >
+                          {portal}
+                        </span>
+                      ),
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -958,7 +1112,7 @@ export default function App() {
                     Send Inquiry
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
-                    By submitting, you agree to be contacted by Straight Drive
+                    By submitting, you agree to be contacted by Mani Kandan
                     regarding this property.
                   </p>
                 </motion.form>
@@ -1024,7 +1178,7 @@ export default function App() {
 
           <div className="border-t border-white/15 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
             <p className="text-white/40 text-xs">
-              © {new Date().getFullYear()} Straight Drive. All rights reserved.
+              © {new Date().getFullYear()} Residency. All rights reserved.
             </p>
             <p className="text-white/40 text-xs">
               Built with ❤️ using{" "}
